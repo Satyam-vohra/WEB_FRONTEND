@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { Search, Settings, User, Calendar as CalendarIcon, BarChart3 } from 'lucide-react';
+import { Search, Settings, User, Calendar as CalendarIcon, BarChart3, CreditCard } from 'lucide-react';
 import { TopCompaniesCarousel } from '@/components/features/TopCompaniesCarousel';
 import { AIResumeMatcher } from '@/components/features/AIResumeMatcher';
 import { ChatBot } from '@/components/features/ChatBot';
@@ -25,6 +26,12 @@ import { LanguageSelector } from '@/components/features/LanguageSelector';
 import { ThreeDotMenu } from '@/components/features/ThreeDotMenu';
 import { SubscriptionPlans } from '@/components/features/SubscriptionPlans';
 import { SupportOptions } from '@/components/features/SupportOptions';
+import { QuickPaymentOptions } from '@/components/payment/QuickPaymentOptions';
+import { PaymentHistory } from '@/components/payment/PaymentHistory';
+import { SubscriptionStatus } from '@/components/payment/SubscriptionStatus';
+
+// Job Assistant API Configuration
+const JOB_ASSISTANT_API_KEY = 'AIzaSyAtP7K-YwgojBXuQhtcJlCclynqGy5AyJg';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -50,6 +57,7 @@ const Index = () => {
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [isGlobalSearch, setIsGlobalSearch] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
+  const [showPaymentSection, setShowPaymentSection] = useState(false);
 
   const states = [
     "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -93,7 +101,6 @@ const Index = () => {
   ];
 
   const allJobs = [
-    // Technology Jobs
     {
       id: 1,
       title: "Software Developer",
@@ -128,7 +135,6 @@ const Index = () => {
       requiredSkills: ['Python', 'Machine Learning', 'SQL', 'Data Visualization'],
       isGlobal: false
     },
-    // Transportation Jobs
     {
       id: 3,
       title: "Driver",
@@ -163,7 +169,6 @@ const Index = () => {
       requiredSkills: ['Two Wheeler License', 'Local Area Knowledge', 'Physical Fitness'],
       isGlobal: false
     },
-    // Cleaning Services
     {
       id: 5,
       title: "Cleaner",
@@ -198,7 +203,6 @@ const Index = () => {
       requiredSkills: ['Hotel Experience', 'Attention to Detail', 'Team Work'],
       isGlobal: false
     },
-    // Skilled Trades
     {
       id: 7,
       title: "Tailor",
@@ -233,7 +237,6 @@ const Index = () => {
       requiredSkills: ['Electrical Wiring', 'Safety Protocols', 'Problem Solving'],
       isGlobal: false
     },
-    // Healthcare
     {
       id: 9,
       title: "Nurse",
@@ -251,7 +254,6 @@ const Index = () => {
       requiredSkills: ['Nursing Degree', 'Patient Care', 'Medical Knowledge'],
       isGlobal: false
     },
-    // Food Service
     {
       id: 10,
       title: "Cook",
@@ -269,7 +271,6 @@ const Index = () => {
       requiredSkills: ['Cooking Experience', 'Food Safety', 'Menu Planning'],
       isGlobal: false
     },
-    // Security
     {
       id: 11,
       title: "Security Guard",
@@ -287,7 +288,6 @@ const Index = () => {
       requiredSkills: ['Security Training', 'Alertness', 'Physical Fitness'],
       isGlobal: false
     },
-    // Beauty & Wellness
     {
       id: 12,
       title: "Hair Stylist",
@@ -305,7 +305,6 @@ const Index = () => {
       requiredSkills: ['Hair Styling', 'Customer Service', 'Creativity'],
       isGlobal: false
     },
-    // Construction
     {
       id: 13,
       title: "Construction Worker",
@@ -323,7 +322,6 @@ const Index = () => {
       requiredSkills: ['Physical Strength', 'Construction Tools', 'Team Work'],
       isGlobal: false
     },
-    // Domestic Help
     {
       id: 14,
       title: "Maid",
@@ -341,7 +339,6 @@ const Index = () => {
       requiredSkills: ['Cleaning', 'Cooking', 'Reliability'],
       isGlobal: false
     },
-    // Retail
     {
       id: 15,
       title: "Shop Keeper",
@@ -359,7 +356,6 @@ const Index = () => {
       requiredSkills: ['Customer Service', 'Cash Handling', 'Inventory Management'],
       isGlobal: false
     },
-    // Freelance/Remote Jobs
     {
       id: 16,
       title: "React Developer - Freelance",
@@ -407,6 +403,7 @@ const Index = () => {
 
   const handleSearch = () => {
     console.log("Search button clicked with query:", searchQuery);
+    console.log("Job Assistant API Key configured:", JOB_ASSISTANT_API_KEY ? 'Yes' : 'No');
     console.log("Filters:", { selectedState, selectedJobProfile, salaryFrom, salaryTo, selectedJobModes, isGlobalSearch });
     
     let filteredJobs = [...allJobs];
@@ -476,7 +473,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
-              <h1 className="text-2xl font-bold text-white animate-pulse">ROTI GUGAAD</h1>
+              <h1 className="text-2xl font-bold text-white animate-pulse">BHAGYA</h1>
               <div className="flex space-x-1">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
                 <div className="w-2 h-2 bg-yellow-400 rounded-full animate-ping animation-delay-1000"></div>
@@ -485,21 +482,36 @@ const Index = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              {/* Language Selector */}
               <LanguageSelector onLanguageChange={handleLanguageChange} />
-
-              {/* Three Dot Menu */}
               <ThreeDotMenu />
-
-              {/* Subscription Plans */}
               <SubscriptionPlans />
-
-              {/* Support Options */}
               <SupportOptions />
-
               <DarkModeToggle />
               
-              {/* Settings Menu */}
+              {/* Payment Menu */}
+              <Menubar className="border-none bg-transparent">
+                <MenubarMenu>
+                  <MenubarTrigger className="text-white hover:bg-white/20 border-none bg-transparent focus:bg-white/20 data-[state=open]:bg-white/20 transition-all duration-300">
+                    <CreditCard className="w-4 h-4 mr-2" />
+                    Payments
+                  </MenubarTrigger>
+                  <MenubarContent>
+                    <MenubarItem 
+                      className="font-bold text-gray-800 cursor-pointer hover:bg-blue-50 transition-colors"
+                      onClick={() => setShowPaymentSection(!showPaymentSection)}
+                    >
+                      Payment Options
+                    </MenubarItem>
+                    <MenubarItem className="font-bold text-gray-800 cursor-pointer hover:bg-blue-50 transition-colors">
+                      Payment History
+                    </MenubarItem>
+                    <MenubarItem className="font-bold text-gray-800 cursor-pointer hover:bg-blue-50 transition-colors">
+                      Subscription
+                    </MenubarItem>
+                  </MenubarContent>
+                </MenubarMenu>
+              </Menubar>
+              
               <Menubar className="border-none bg-transparent">
                 <MenubarMenu>
                   <MenubarTrigger className="text-white hover:bg-white/20 border-none bg-transparent focus:bg-white/20 data-[state=open]:bg-white/20 transition-all duration-300">
@@ -532,7 +544,17 @@ const Index = () => {
       <div className="w-full py-8 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Voice Search Component */}
+          {/* Payment Section */}
+          {showPaymentSection && (
+            <div className="mb-8 space-y-6 animate-fade-in">
+              <QuickPaymentOptions />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <SubscriptionStatus />
+                <PaymentHistory />
+              </div>
+            </div>
+          )}
+
           <div className="animate-fade-in">
             <VoiceSearch onVoiceQuery={handleVoiceQuery} />
           </div>
@@ -568,7 +590,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Job Mode Toggle */}
           <div className="animate-slide-in-right">
             <JobModeToggle 
               selectedModes={selectedJobModes} 
@@ -580,7 +601,6 @@ const Index = () => {
             <AIResumeMatcher />
           </div>
 
-          {/* Skill Gap Analysis */}
           <div className="animate-scale-in animation-delay-700">
             <SkillGapAnalysis 
               userSkills={userSkills}
