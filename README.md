@@ -743,7 +743,6 @@ const Index = () => {
               </Card>
             ))}
           </div>
-
           <div className="animate-fade-in animation-delay-1000">
             <ChatBot />
           </div>
@@ -752,6 +751,4 @@ const Index = () => {
     </div>
   );
 };
-
-
 export default Index;
