@@ -7,11 +7,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
+
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
+  
 } from "@/components/ui/menubar";
 import { Search, Settings, User, Calendar as CalendarIcon, BarChart3, CreditCard } from 'lucide-react';
 import { TopCompaniesCarousel } from '@/components/features/TopCompaniesCarousel';
