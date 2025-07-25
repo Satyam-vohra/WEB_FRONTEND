@@ -33,7 +33,6 @@ import { SubscriptionStatus } from '@/components/payment/SubscriptionStatus';
 
 // Job Assistant API Configuration
 const JOB_ASSISTANT_API_KEY = 'AIzaSyAtP7K-YwgojBXuQhtcJlCclynqGy5AyJg';
-
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [jobs, setJobs] = useState([]);
